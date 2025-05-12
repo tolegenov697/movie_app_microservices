@@ -62,7 +62,6 @@ movie_app_microservices/ ← Root of Git repository and Go Workspace
 └── README.md ← Project documentation
 ```
 ---
-Would you like a version with collapsible sections or emoji-free formatting as well?
 
 
 ### 2.1. Microservices
