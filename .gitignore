@@ -1,0 +1,57 @@
+# Скомпилированные исполняемые файлы из каждого сервиса
+# Замените имена файлов на те, которые генерируются при сборке ваших сервисов, если они отличаются
+movie-service/movie-service
+movie-service/movie-service.exe
+user-service/userservice
+user-service/userservice.exe
+review-service/reviewservice
+review-service/reviewservice.exe
+
+# Общие правила для исполняемых файлов и библиотек
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Тестовые бинарники
+*.test
+
+# Вывод сборки (если вы собираете в общую папку bin/build на уровне проекта)
+/build/
+/bin/
+
+# Папки vendor внутри каждого сервиса (если вы не хотите их коммитить)
+# Раскомментируйте, если используете 'go mod vendor' и не хотите коммитить vendor
+# movie-service/vendor/
+# user-service/vendor/
+# review-service/vendor/
+
+# Файлы IDE (размещаются в корне проекта)
+.vscode/
+.idea/
+
+# Локальные файлы конфигурации (которые не должны попадать в репозиторий)
+.env
+*.local.yaml
+config.local.yaml
+*.local.json
+
+# Файлы операционной системы
+.DS_Store
+Thumbs.db
+
+# Логи
+*.log
+log/
+logs/
+
+# Сгенерированные файлы Go, если они не должны быть в репозитории
+# (Обычно сгенерированный proto код (.pb.go) коммитят, но это на ваше усмотрение)
+# **/*.pb.go
+# **/*_grpc.pb.go
+
+# Файлы сессий и временные файлы некоторых IDE
+*~
+*.swp
+*.swo
