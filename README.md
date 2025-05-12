@@ -311,4 +311,63 @@ Key dependencies used across the services (from `go.mod` files):
     * Implement distributed tracing for better observability in a microservices environment.
     * Containerize services using Docker for easier deployment and orchestration (e.g., with Kubernetes).
 
-This documentation should serve as a good starting point. Remember to keep it updated as your project evolves!
+# 📦 Project Structure: `movie_app_microservices`
+
+This monorepo is a Go Workspace containing three microservices: Movie, User, and Review. Each service follows a clean architecture with dedicated domains, APIs, gRPC interfaces, and storage layers.
+
+```bash
+movie_app_microservices/ ← Root of Git repository and Go Workspace
+├── .git/ ← Git folder
+├── .gitignore ← Git ignore rules
+├── go.work ← Go Workspace file linking all modules
+├── go.work.sum ← Checksums for workspace
+
+├── movie-service/ ← 🎬 MovieService module
+│ ├── cmd/
+│ │ └── movieservice/
+│ │ └── main.go ← Entry point for MovieService
+│ ├── internal/
+│ │ ├── api/ ← HTTP API (handlers, router)
+│ │ ├── domain/ ← Domain models (e.g., Movie, CreateMovieRequest)
+│ │ ├── store/ ← Store interface and implementation (e.g., PostgresMovieStore)
+│ │ ├── grpc/ ← gRPC server implementation
+│ │ └── genproto/ ← Generated gRPC code (e.g., moviepb/)
+│ ├── pkg/ ← Optional shared utilities
+│ ├── proto/ ← Source .proto files for gRPC
+│ └── go.mod ← Go module definition
+
+├── user-service/ ← 👤 UserService module
+│ ├── cmd/
+│ │ └── userservice/
+│ │ └── main.go ← Entry point for UserService
+│ ├── internal/
+│ │ ├── api/ ← HTTP API (handlers, router, middleware)
+│ │ ├── domain/ ← Domain models (e.g., User, RegisterRequest)
+│ │ ├── store/ ← Store interface and implementation (e.g., PostgresUserStore)
+│ │ ├── grpc/ ← gRPC server implementation
+│ │ └── genproto/ ← Generated gRPC code (e.g., userpb/)
+│ ├── pkg/
+│ │ └── auth/ ← Utilities for password hashing and JWT handling
+│ ├── proto/ ← Source .proto files for gRPC
+│ └── go.mod ← Go module definition
+
+├── review-service/ ← 📝 ReviewService module
+│ ├── cmd/
+│ │ └── reviewservice/
+│ │ └── main.go ← Entry point for ReviewService
+│ ├── internal/
+│ │ ├── api/ ← HTTP API (handlers, router)
+│ │ ├── domain/ ← Domain models (e.g., Review, CreateReviewRequest)
+│ │ ├── store/ ← Store interface and implementation (e.g., PostgresReviewStore)
+│ │ ├── clients/ ← gRPC clients to other services (UserService, MovieService)
+│ │ └── genproto/ ← Copied/generated gRPC code from other services (userpb/, moviepb/)
+│ ├── proto/ ← (Optional) .proto files if exposing its own gRPC API
+│ └── go.mod ← Go module definition
+
+└── README.md ← Project documentation
+```
+
+
+---
+
+Would you like a version with collapsible sections or emoji-free formatting as well?
