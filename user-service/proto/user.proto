@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package user; // Имя пакета для proto
+
+// Важно: измените этот путь на тот, который будет у вас для сгенерированного Go-кода.
+// Обычно это <имя_модуля>/internal/genproto/userpb или аналогично.
+option go_package = "user-service/internal/genproto/userpb";
+
+import "google/protobuf/timestamp.proto"; // Для использования Timestamp
+
+// Сообщение, представляющее пользователя (для gRPC ответов)
+message UserResponse {
+  string id = 1;
+  string username = 2;
+  string email = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+  // Не включаем PasswordHash и другую чувствительную информацию
+}
+
+// Запрос на получение пользователя по ID
+message GetUserRequest {
+  string user_id = 1;
+}
+
+// Сервис для работы с пользователями
+service UserService {
+  // Получает информацию о пользователе по его ID
+  rpc GetUser(GetUserRequest) returns (UserResponse);
+
+  // TODO: В будущем можно добавить:
+  // rpc RegisterUser(RegisterUserRequest) returns (UserResponse); // Если регистрацию тоже делаем через gRPC
+  // rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);    // Если логин тоже через gRPC
+}

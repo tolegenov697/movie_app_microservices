@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package movie; // Имя пакета для proto
+
+// Важно: измените этот путь на тот, который будет у вас для сгенерированного Go-кода.
+option go_package = "movie-service/internal/genproto/moviepb";
+
+// Краткая информация о фильме, передаваемая между сервисами
+message MovieInfo {
+  string id = 1;
+  string title = 2;
+  int32 release_year = 3;
+  string status = 4; // "approved", "pending_approval", "rejected"
+  // string poster_url = 5; // Опционально, если нужно
+}
+
+// Запрос на получение информации о фильме
+message GetMovieInfoRequest {
+  string movie_id = 1;
+}
+
+// Ответ с информацией о фильме
+message GetMovieInfoResponse {
+  MovieInfo movie_info = 1;
+}
+
+// Запрос на проверку существования фильма
+message CheckMovieExistsRequest {
+  string movie_id = 1;
+}
+
+// Ответ о существовании фильма
+message CheckMovieExistsResponse {
+  bool exists = 1;
+}
+
+// Сервис для межсервисного взаимодействия MovieService
+service MovieInterService {
+  // Получает краткую информацию о фильме по его ID
+  rpc GetMovieInfo(GetMovieInfoRequest) returns (GetMovieInfoResponse);
+
+  // Проверяет, существует ли фильм с данным ID
+  rpc CheckMovieExists(CheckMovieExistsRequest) returns (CheckMovieExistsResponse);
+}
